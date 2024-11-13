@@ -33,6 +33,8 @@
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
 
+
+
 		<!-- Spring Web for MVC support -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -46,12 +48,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Lombok for reducing boilerplate code (e.g., Getters/Setters) -->
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+
 
 		<!-- DevTools for Hot Reloading (Optional) -->
 		<dependency>
