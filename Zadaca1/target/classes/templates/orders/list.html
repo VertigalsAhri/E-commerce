@@ -1,0 +1,27 @@
+<!-- In src/main/resources/templates/orders/list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order List</title>
+</head>
+<body>
+<h1>Order List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}">Order ID</td>
+        <td th:text="${order.productName}">Product Name</td>
+        <td th:text="${order.quantity}">Quantity</td>
+    </tr>
+    </tbody>
+</table>
+<a href="/orders/new">Create New Order</a>
+</body>
+</html>
