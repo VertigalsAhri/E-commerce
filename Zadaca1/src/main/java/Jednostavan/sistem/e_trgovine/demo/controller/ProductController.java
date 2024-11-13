@@ -15,7 +15,6 @@ public class ProductController {
 
     @GetMapping("/products")
     public String getAllProducts(Model model) {
-        // Get all products from the database
         model.addAttribute("products", productRepository.findAll());
         return "products/list";  // Return the 'list.html' template
     }

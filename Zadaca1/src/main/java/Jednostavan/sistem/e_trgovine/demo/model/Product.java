@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "product", schema = "public") // Specify the schema name here
+@Table(name = "product", schema = "public")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,17 +18,17 @@ public class Product {
     private double price;
     private String description;
 
-    // Constructor
+
     public Product() {}
 
-    // Constructor with fields
+
     public Product(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
     }
 
-    // Getters and setters
+
     public Long getId() {
         return id;
     }
