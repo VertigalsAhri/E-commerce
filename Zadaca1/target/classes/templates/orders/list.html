@@ -1,27 +1,129 @@
-<!-- In src/main/resources/templates/orders/list.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Order List</title>
+    <title>Moje Narudžbe</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1>Order List</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Order ID</th>
-        <th>Product Name</th>
-        <th>Quantity</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.id}">Order ID</td>
-        <td th:text="${order.productName}">Product Name</td>
-        <td th:text="${order.quantity}">Quantity</td>
-    </tr>
-    </tbody>
-</table>
-<a href="/orders/new">Create New Order</a>
+    <div class="container-fluid">
+        <nav class="navbar">
+            <h1>Moje Narudžbe</h1>
+            <div class="nav-links">
+                <a href="/products" class="btn btn-primary">Proizvodi</a>
+                <span th:text="${'Dobrodošli, ' + session.user.username}" class="welcome-text"></span>
+                <a href="/logout" class="btn btn-secondary">Odjava</a>
+            </div>
+        </nav>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Proizvod</th>
+                        <th>Količina</th>
+                        <th>Ukupna Cijena</th>
+                        <th>Status</th>
+                        <th>Datum</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}"></td>
+                        <td th:text="${order.product.name}"></td>
+                        <td th:text="${order.quantity}"></td>
+                        <td th:text="${order.totalPrice + ' KM'}"></td>
+                        <td th:text="${order.status.displayValue}"></td>
+                        <td th:text="${#temporals.format(order.orderDate, 'dd.MM.yyyy HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{/orders/{id}(id=${order.id})}" 
+                               class="btn btn-info">Detalji</a>
+                            
+                            <form th:if="${session.user.role == 'ADMIN' || session.user.id == order.user.id}"
+                                  th:action="@{/orders/{id}/delete(id=${order.id})}" 
+                                  method="post" 
+                                  style="display: inline;">
+                                <button type="submit" 
+                                        class="btn btn-danger"
+                                        onclick="return confirm('Jeste li sigurni da želite obrisati ovu narudžbu?')">
+                                    Izbriši
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .welcome-text {
+            margin: 0 1rem;
+            color: #666;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-info { background-color: #17a2b8; color: white; }
+        .btn-danger { background-color: #dc3545; color: white; }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
 </body>
-</html>
+</html> 

@@ -1,46 +1,123 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
     background-color: #f5f5f5;
 }
 
-.container {
+.container-fluid {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-table {
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.welcome-text {
+    margin-right: 15px;
+}
+
+.table-responsive {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
-th, td {
+.table th,
+.table td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-th {
+.table th {
     background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.table tr:hover {
+    background-color: #f5f5f5;
 }
 
 .btn {
     display: inline-block;
     padding: 8px 16px;
+    margin: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-primary {
     background-color: #007bff;
     color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    margin: 5px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
 }
 
 .btn-danger {
     background-color: #dc3545;
+    color: white;
+}
+
+.actions {
+    margin: 20px 0;
+}
+
+.admin-actions {
+    display: inline-block;
+}
+
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .form-group {
@@ -57,79 +134,39 @@ th {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-}
-
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 4px;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.product-details {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 5px;
-    margin: 20px 0;
-}
-
-.detail-item {
-    margin-bottom: 15px;
-}
-
-.detail-item label {
-    font-weight: bold;
-    display: inline-block;
-    width: 100px;
-}
-
-.description-text {
-    white-space: pre-line;
-    margin-top: 5px;
-    padding: 10px;
-    background: white;
-    border-radius: 4px;
-}
-
-.button-group {
-    margin-top: 20px;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
     box-sizing: border-box;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
+.error {
+    color: #dc3545;
+    margin-bottom: 10px;
+}
+
+.order-details {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.detail-group {
+    margin-bottom: 15px;
+}
+
+.detail-group label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.product-info {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.status-form {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
 } 

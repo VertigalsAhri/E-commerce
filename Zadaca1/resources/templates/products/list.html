@@ -6,8 +6,9 @@
 <body>
     <h1>Proizvodi</h1>
     
-    <!-- Dugme za dodavanje novog proizvoda -->
-    <a href="/products/new" class="btn">Dodaj Novi Proizvod</a>
+    <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
+        <a href="/products/new" class="btn">Dodaj Novi Proizvod</a>
+    </div>
     
     <table>
         <tr>
@@ -22,10 +23,12 @@
             <td th:text="${product.price}"></td>
             <td>
                 <a th:href="@{/products/{id}(id=${product.id})}">Detalji</a>
-                <a th:href="@{/products/{id}/edit(id=${product.id})}">Uredi</a>
-                <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post" style="display: inline;">
-                    <button type="submit">Izbriši</button>
-                </form>
+                <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
+                    <a th:href="@{/products/{id}/edit(id=${product.id})}">Uredi</a>
+                    <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post" style="display: inline;">
+                        <button type="submit">Izbriši</button>
+                    </form>
+                </div>
             </td>
         </tr>
     </table>
