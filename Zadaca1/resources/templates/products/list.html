@@ -2,35 +2,82 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lista Proizvoda</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-    <h1>Proizvodi</h1>
-    
-    <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
-        <a href="/products/new" class="btn">Dodaj Novi Proizvod</a>
-    </div>
-    
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Naziv</th>
-            <th>Cijena</th>
-            <th>Akcije</th>
-        </tr>
-        <tr th:each="product : ${products}">
-            <td th:text="${product.id}"></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td>
-                <a th:href="@{/products/{id}(id=${product.id})}">Detalji</a>
-                <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
-                    <a th:href="@{/products/{id}/edit(id=${product.id})}">Uredi</a>
-                    <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post" style="display: inline;">
-                        <button type="submit">Izbriši</button>
-                    </form>
+    <div class="container">
+        <nav class="navbar">
+            <h1>Proizvodi</h1>
+            <div class="nav-links">
+                <!-- Različiti buttoni za admina i usera -->
+                <div th:if="${session.user.role == 'ADMIN'}">
+                    <a href="/orders" class="btn btn-info">Sve Narudžbe</a>
                 </div>
-            </td>
-        </tr>
-    </table>
+                <div th:if="${session.user.role != 'ADMIN'}">
+                    <a href="/orders" class="btn btn-info">Moje Narudžbe</a>
+                </div>
+                
+                <span th:text="${'Dobrodošli, ' + session.user.username}" class="welcome-text"></span>
+                <a href="/logout" class="btn btn-secondary">Odjava</a>
+            </div>
+        </nav>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        
+        <div th:if="${session.user != null && session.user.role == 'ADMIN'}" class="admin-actions">
+            <a href="/products/new" class="btn btn-primary">Dodaj Novi Proizvod</a>
+        </div>
+        
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Naziv</th>
+                <th>Cijena</th>
+                <th>Akcije</th>
+            </tr>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td>
+                    <a th:href="@{/products/{id}(id=${product.id})}">Detalji</a>
+                    <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
+                        <a th:href="@{/products/{id}/edit(id=${product.id})}">Uredi</a>
+                        <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post" style="display: inline;">
+                            <button type="submit">Izbriši</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <style>
+        /* Postojeći stilovi */
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        
+        .btn-info { 
+            background: #17a2b8; 
+            color: white; 
+        }
+        
+        .welcome-text {
+            margin: 0 10px;
+            color: #666;
+        }
+    </style>
 </body>
 </html> 

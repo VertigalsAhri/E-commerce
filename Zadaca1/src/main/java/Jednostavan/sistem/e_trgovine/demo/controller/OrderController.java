@@ -34,10 +34,12 @@ public class OrderController {
             return "redirect:/login";
         }
 
-        if (user.getRole().equals("ADMIN")) {
+        if ("ADMIN".equals(user.getRole())) {
             model.addAttribute("orders", orderService.getAllOrders());
+            model.addAttribute("isAdmin", true);
         } else {
             model.addAttribute("orders", orderService.getUserOrders(user));
+            model.addAttribute("isAdmin", false);
         }
         return "orders/list";
     }
