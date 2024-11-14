@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalji Proizvoda</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Detalji Proizvoda</h1>
+        
+        <div class="product-details">
+            <div class="detail-item">
+                <label>ID:</label>
+                <span th:text="${product.id}"></span>
+            </div>
+            
+            <div class="detail-item">
+                <label>Naziv:</label>
+                <span th:text="${product.name}"></span>
+            </div>
+            
+            <div class="detail-item">
+                <label>Cijena:</label>
+                <span th:text="${#numbers.formatDecimal(product.price, 1, 2)} + ' KM'"></span>
+            </div>
+            
+            <div class="detail-item">
+                <label>Opis:</label>
+                <p th:text="${product.description}" class="description-text"></p>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <a th:href="@{/products/{id}/edit(id=${product.id})}" class="btn">Uredi</a>
+            <form th:action="@{/products/{id}/delete(id=${product.id})}" 
+                  method="post" 
+                  style="display: inline;">
+                <button type="submit" class="btn btn-danger" 
+                        onclick="return confirm('Jeste li sigurni da želite obrisati ovaj proizvod?')">
+                    Izbriši
+                </button>
+            </form>
+            <a href="/products" class="btn btn-secondary">Nazad na listu</a>
+        </div>
+    </div>
+</body>
+</html> 
