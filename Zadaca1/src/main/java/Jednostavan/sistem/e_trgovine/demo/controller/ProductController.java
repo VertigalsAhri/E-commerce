@@ -1,7 +1,9 @@
 package Jednostavan.sistem.e_trgovine.demo.controller;
 
 import Jednostavan.sistem.e_trgovine.demo.model.Product;
+import Jednostavan.sistem.e_trgovine.demo.model.User;
 import Jednostavan.sistem.e_trgovine.demo.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,11 @@ public class ProductController {
 
     // Forma za novi proizvod
     @GetMapping("/new")
-    public String showNewProductForm(Model model) {
+    public String showNewProductForm(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null || !user.getRole().equals("ADMIN")) {
+            return "redirect:/products";
+        }
         model.addAttribute("product", new Product());
         return "products/form";
     }
@@ -74,7 +80,13 @@ public class ProductController {
 
     // Brisanje proizvoda
     @PostMapping("/{id}/delete")
-    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String deleteProduct(@PathVariable Long id, 
+                              HttpSession session, 
+                              RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("user");
+        if (user == null || !user.getRole().equals("ADMIN")) {
+            return "redirect:/products";
+        }
         productService.deleteProduct(id);
         redirectAttributes.addFlashAttribute("message", "Proizvod je uspješno obrisan!");
         return "redirect:/products";

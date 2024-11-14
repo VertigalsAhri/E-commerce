@@ -1,9 +1,6 @@
 package Jednostavan.sistem.e_trgovine.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -12,20 +9,40 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Korisničko ime je obavezno")
-    @Size(min = 3, max = 50, message = "Korisničko ime mora biti između 3 i 50 karaktera")
+    @Column(unique = true)
     private String username;
-
-    @NotBlank(message = "Email je obavezan")
-    @Email(message = "Email mora biti validan")
-    private String email;
-
-    @NotBlank(message = "Lozinka je obavezna")
-    @Size(min = 6, message = "Lozinka mora imati najmanje 6 karaktera")
     private String password;
+    private String role;
 
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    // Konstruktori
+    public User() {}
 
-    // Getteri i setteri
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Getteri i Setteri
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+
+    // toString metoda za lakši debug
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

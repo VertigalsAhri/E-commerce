@@ -5,48 +5,65 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-    <div class="container">
-        <h1>Proizvodi</h1>
-        
-        <!-- Poruka o uspjehu -->
-        <div th:if="${message}" class="alert alert-success">
-            <span th:text="${message}"></span>
+    <div class="container-fluid">
+        <div class="header">
+            <h1>Lista Proizvoda</h1>
+            <div class="nav-links">
+                <a href="/orders" class="btn btn-primary">Moje Narudžbe</a>
+                <span th:text="${'Dobrodošli, ' + session.user.username}" class="welcome-text"></span>
+                <a href="/logout" class="btn btn-secondary">Odjava</a>
+            </div>
         </div>
-        
-        <!-- Dugme za dodavanje novog proizvoda -->
-        <a href="/products/new" class="btn">Dodaj Novi Proizvod</a>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Naziv</th>
-                    <th>Cijena</th>
-                    <th>Opis</th>
-                    <th>Akcije</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="product : ${products}">
-                    <td th:text="${product.id}"></td>
-                    <td th:text="${product.name}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td th:text="${product.description}"></td>
-                    <td>
-                        <a th:href="@{/products/{id}(id=${product.id})}" class="btn">Detalji</a>
-                        <a th:href="@{/products/{id}/edit(id=${product.id})}" class="btn">Uredi</a>
-                        <form th:action="@{/products/{id}/delete(id=${product.id})}" 
-                              method="post" 
-                              style="display: inline;">
-                            <button type="submit" class="btn btn-danger" 
-                                    onclick="return confirm('Jeste li sigurni?')">
-                                Izbriši
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div class="actions">
+            <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
+                <a href="/products/new" class="btn btn-primary">Dodaj Novi Proizvod</a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Naziv</th>
+                        <th>Cijena</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.price + ' KM'}"></td>
+                        <td class="actions">
+                            <a th:href="@{/products/{id}(id=${product.id})}" 
+                               class="btn btn-info">Detalji</a>
+                            
+                            <a th:href="@{/orders/new/{id}(id=${product.id})}" 
+                               class="btn btn-success">Naruči</a>
+                            
+                            <div th:if="${session.user != null && session.user.role == 'ADMIN'}" 
+                                 class="admin-actions">
+                                <a th:href="@{/products/{id}/edit(id=${product.id})}" 
+                                   class="btn btn-warning">Uredi</a>
+                                <form th:action="@{/products/{id}/delete(id=${product.id})}" 
+                                      method="post" 
+                                      style="display: inline;">
+                                    <button type="submit" 
+                                            class="btn btn-danger" 
+                                            onclick="return confirm('Jeste li sigurni?')">
+                                        Izbriši
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
