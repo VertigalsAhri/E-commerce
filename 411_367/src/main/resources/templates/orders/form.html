@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nova Narudžba</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Nova Narudžba</h1>
+            <a href="/products" class="btn btn-secondary">Nazad na proizvode</a>
+        </div>
+
+        <div class="product-info">
+            <h2 th:text="${product.name}"></h2>
+            <p th:text="${'Cijena: ' + product.price + ' KM'}"></p>
+        </div>
+
+        <form th:action="@{/orders/new}" method="post">
+            <input type="hidden" name="product.id" th:value="${product.id}" />
+            
+            <div class="form-group">
+                <label for="quantity">Količina:</label>
+                <input type="number" 
+                       id="quantity"
+                       name="quantity" 
+                       min="1" 
+                       value="1"
+                       required 
+                       class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Naruči</button>
+        </form>
+    </div>
+
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .product-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+    </style>
+</body>
+</html> 

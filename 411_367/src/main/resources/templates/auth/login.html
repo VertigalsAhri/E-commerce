@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Prijava</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Prijava</h1>
+            
+            <div th:if="${error}" class="alert" th:text="${error}"></div>
+            
+            <div th:if="${message}" class="alert success" th:text="${message}"></div>
+            
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <input type="text" 
+                           name="username" 
+                           placeholder="Korisničko ime"
+                           required 
+                           autofocus />
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" 
+                           name="password" 
+                           placeholder="Lozinka"
+                           required />
+                </div>
+                
+                <button type="submit">Prijavi se</button>
+            </form>
+
+            <div class="register-link">
+                Nemate račun? <a href="/register">Registrujte se</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            height: 100vh;
+        }
+
+        .login-container {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1877f2;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #166fe5;
+        }
+
+        .alert {
+            background: #ffebee;
+            color: #c62828;
+            padding: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 1.5rem;
+            }
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+        
+        .register-link a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+</body>
+</html> 

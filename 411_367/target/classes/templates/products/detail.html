@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalji Proizvoda</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .order-details {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .detail-group {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .detail-group label {
+            font-weight: bold;
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .description-container {
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .admin-actions {
+            display: inline;
+            margin-left: 10px;
+        }
+
+        .admin-actions form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Detalji Proizvoda</h1>
+        </div>
+
+        <div class="order-details">
+            <h2>Proizvod #<span th:text="${product.id}"></span></h2>
+            
+            <div class="detail-group">
+                <label>Naziv:</label>
+                <span th:text="${product.name}"></span>
+            </div>
+            
+            <div class="detail-group">
+                <label>Cijena:</label>
+                <span th:text="${#numbers.formatDecimal(product.price, 1, 2)} + ' KM'"></span>
+            </div>
+            
+            <div class="description-container">
+                <label>Opis:</label>
+                <p th:text="${product.description}"></p>
+            </div>
+
+            <div class="actions">
+                <a href="/products" class="btn btn-secondary">Nazad na listu</a>
+                <a th:href="@{/orders/new/{id}(id=${product.id})}" class="btn btn-success">Naruči</a>
+                
+                <div th:if="${session.user != null && session.user.role == 'ADMIN'}" class="admin-actions">
+                    <a th:href="@{/products/{id}/edit(id=${product.id})}" class="btn btn-warning">Uredi</a>
+                    <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post">
+                        <button type="submit" class="btn btn-danger" 
+                                onclick="return confirm('Jeste li sigurni da želite obrisati ovaj proizvod?')">
+                            Izbriši
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

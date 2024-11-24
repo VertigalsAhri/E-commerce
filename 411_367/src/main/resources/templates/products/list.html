@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista Proizvoda</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: none;
+            white-space: nowrap;
+        }
+        
+        .welcome-text {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="header">
+            <h1>Lista Proizvoda</h1>
+            <div class="nav-links">
+                <div th:if="${session.user.role == 'ADMIN'}">
+                    <a href="/orders" class="btn btn-info">Sve Narudžbe</a>
+                </div>
+                <div th:if="${session.user.role != 'ADMIN'}">
+                    <a href="/orders" class="btn btn-info">Moje Narudžbe</a>
+                </div>
+                <a th:if="${session.user.role == 'ADMIN'}" 
+                   href="/users" 
+                   class="btn btn-primary">Lista Korisnika</a>
+                <span th:text="${'Dobrodošli, ' + session.user.username}" class="welcome-text"></span>
+                <a href="/logout" class="btn btn-secondary">Odjava</a>
+            </div>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div class="actions">
+            <div th:if="${session.user != null && session.user.role == 'ADMIN'}">
+                <a href="/products/new" class="btn btn-primary">Dodaj Novi Proizvod</a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Naziv</th>
+                        <th>Cijena</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.price + ' KM'}"></td>
+                        <td class="actions">
+                            <a th:href="@{/products/{id}(id=${product.id})}" 
+                               class="btn btn-info">Detalji</a>
+                            
+                            <a th:href="@{/orders/new/{id}(id=${product.id})}" 
+                               class="btn btn-success">Naruči</a>
+                            
+                            <div th:if="${session.user != null && session.user.role == 'ADMIN'}" 
+                                 class="admin-actions">
+                                <a th:href="@{/products/{id}/edit(id=${product.id})}" 
+                                   class="btn btn-warning">Uredi</a>
+                                <form th:action="@{/products/{id}/delete(id=${product.id})}" 
+                                      method="post" 
+                                      style="display: inline;">
+                                    <button type="submit" 
+                                            class="btn btn-danger" 
+                                            onclick="return confirm('Jeste li sigurni?')">
+                                        Izbriši
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

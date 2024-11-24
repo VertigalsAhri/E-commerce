@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Narudžbe</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <div class="container">
+        <div class="header-buttons">
+            <h1>Sve Narudžbe</h1>
+            <div class="nav-links">
+                <a href="/products" class="btn btn-info">Nazad na proizvode</a>
+                <span th:text="${'Dobrodošli, ' + session.user.username}" class="welcome-text"></span>
+                <a href="/logout" class="btn btn-secondary">Odjava</a>
+            </div>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th th:if="${isAdmin}">Korisnik</th>
+                        <th>Proizvod</th>
+                        <th>Količina</th>
+                        <th>Ukupna Cijena</th>
+                        <th>Datum</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}"></td>
+                        <td th:if="${isAdmin}" th:text="${order.user.username}"></td>
+                        <td th:text="${order.product.name}"></td>
+                        <td th:text="${order.quantity}"></td>
+                        <td th:text="${order.totalPrice + ' KM'}"></td>
+                        <td th:text="${#temporals.format(order.orderDate, 'dd.MM.yyyy HH:mm')}"></td>
+                        <td class="actions">
+                            <form th:action="@{/orders/{id}/delete(id=${order.id})}" 
+                                  method="post" 
+                                  style="display: inline;">
+                                <button type="submit" 
+                                        class="btn btn-danger"
+                                        onclick="return confirm('Jeste li sigurni?')">
+                                    Izbriši
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        .header-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .table-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        td.actions {
+            text-align: center;
+            width: 150px;
+            white-space: nowrap;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .welcome-text {
+            margin: 0 15px;
+        }
+    </style>
+</body>
+</html> 
